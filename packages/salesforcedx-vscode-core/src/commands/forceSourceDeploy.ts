@@ -44,8 +44,8 @@ export class ForceSourceDeployExecutor extends SfdxCommandletExecutor<
     const commandBuilder = new SfdxCommandBuilder()
       .withDescription(nls.localize('force_source_deploy_text'))
       .withArg('force:source:deploy')
-      .withLogName('force_source_deploy')
-      .withJson();
+      .withLogName('force_source_deploy');
+    // .withJson();
     if (data.type === FileType.Manifest) {
       commandBuilder.withFlag('--manifest', data.filePath);
     } else {
@@ -68,6 +68,12 @@ export class ForceSourceDeployExecutor extends SfdxCommandletExecutor<
     let stdErr = '';
     execution.stderrSubject.subscribe(realData => {
       stdErr += realData.toString();
+    });
+
+    let stdoutSubject = '';
+    execution.stdoutSubject.subscribe(data => {
+      console.log('stdoutSubject, data ', data.toString());
+      stdoutSubject += data.toString();
     });
 
     execution.processExitSubject.subscribe(async exitCode => {
