@@ -74,6 +74,7 @@ import * as decorators from './decorators';
 import { nls } from './messages';
 import { isDemoMode } from './modes/demo-mode';
 import { notificationService, ProgressNotification } from './notifications';
+import { getOrgList } from './orgPicker/orgList';
 import { taskViewService } from './statuses';
 import { telemetryService } from './telemetry';
 
@@ -460,6 +461,8 @@ export async function activate(context: vscode.ExtensionContext) {
   // Set context for defaultusername org
   await setupWorkspaceOrgType();
   registerDefaultUsernameWatcher(context);
+
+  await getOrgList();
 
   // Commands
   const commands = registerCommands(context);
